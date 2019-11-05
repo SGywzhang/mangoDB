@@ -1,0 +1,1 @@
+sh.shardCollection("{0}.{1}", '{' "_id" : "hashed" '}' )

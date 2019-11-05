@@ -1,0 +1,65 @@
+pssh -h ~/cs4224.txt "mkdir /temp/mongodb/main"
+
+pssh -h ~/cs4224.txt "mkdir /temp/mongodb/data"
+
+pssh -h ~/cs4224.txt "mkdir /temp/mongodb/log"
+
+pssh -h ~/cs4224.txt "mkdir /temp/mongodb/main/mongos"
+
+pssh -h ~/cs4224.txt "mkdir /temp/mongodb/log/mongos"
+
+pssh -h ~/cs4224.txt "mkdir /temp/mongodb/data/confdata"
+
+pssh -h ~/cs4224.txt "mkdir /temp/mongodb/main/confinstance"
+
+pssh -h ~/cs4224.txt "mkdir /temp/mongodb/log/conf"
+
+pssh -h ~/cs4224.txt "mkdir /temp/mongodb/data/data1"
+
+pssh -h ~/cs4224.txt "mkdir /temp/mongodb/data/data2"
+
+pssh -h ~/cs4224.txt "mkdir /temp/mongodb/data/data3"
+
+pssh -h ~/cs4224.txt "mkdir /temp/mongodb/main/instance1"
+
+pssh -h ~/cs4224.txt "mkdir /temp/mongodb/main/instance2"
+
+pssh -h ~/cs4224.txt "mkdir /temp/mongodb/main/instance3"
+
+pssh -h ~/cs4224.txt "mkdir /temp/mongodb/log/log1"
+
+pssh -h ~/cs4224.txt "mkdir /temp/mongodb/log/log2"
+
+pssh -h ~/cs4224.txt "mkdir /temp/mongodb/log/log3"
+
+pscp -h ~/cs4224.txt mongodb-linux-x86_64-rhel70-3.4.10.tgz /temp/mongodb/main/instance1/mongodb.tgz
+
+pssh -h ~/cs4224.txt "cp /temp/mongodb/main/instance1/mongodb.tgz /temp/mongodb/main/instance2/mongodb.tgz"
+
+pssh -h ~/cs4224.txt "cp /temp/mongodb/main/instance1/mongodb.tgz /temp/mongodb/main/instance3/mongodb.tgz"
+
+pssh -h ~/cs4224.txt "tar -xvzf /temp/mongodb/main/instance1/mongodb.tgz -C /temp/mongodb/main/instance1/"
+
+scp replica1-1.yaml cs4224c@192.168.48.229:/temp/mongodb/main/instance1/mongodb.conf
+scp replica1-2.yaml cs4224c@192.168.48.230:/temp/mongodb/main/instance1/mongodb.conf
+scp replica1-3.yaml cs4224c@192.168.48.231:/temp/mongodb/main/instance1/mongodb.conf
+
+scp replica2-1.yaml cs4224c@192.168.48.230:/temp/mongodb/main/instance2/mongodb.conf
+scp replica2-2.yaml cs4224c@192.168.48.231:/temp/mongodb/main/instance2/mongodb.conf
+scp replica2-3.yaml cs4224c@192.168.48.232:/temp/mongodb/main/instance1/mongodb.conf
+
+scp replica3-1.yaml cs4224c@192.168.48.231:/temp/mongodb/main/instance3/mongodb.conf
+scp replica3-2.yaml cs4224c@192.168.48.232:/temp/mongodb/main/instance2/mongodb.conf
+scp replica3-3.yaml cs4224c@192.168.48.233:/temp/mongodb/main/instance1/mongodb.conf
+
+scp replica4-1.yaml cs4224c@192.168.48.229:/temp/mongodb/main/instance2/mongodb.conf
+scp replica4-2.yaml cs4224c@192.168.48.232:/temp/mongodb/main/instance3/mongodb.conf
+scp replica4-3.yaml cs4224c@192.168.48.233:/temp/mongodb/main/instance2/mongodb.conf
+
+scp replica5-1.yaml cs4224c@192.168.48.229:/temp/mongodb/main/instance3/mongodb.conf
+scp replica5-2.yaml cs4224c@192.168.48.230:/temp/mongodb/main/instance3/mongodb.conf
+scp replica5-3.yaml cs4224c@192.168.48.233:/temp/mongodb/main/instance3/mongodb.conf
+
+pssh -h ~/cs4224.txt "/temp/mongodb/main/instance1/mongodb-linux-x86_64-rhel70-3.4.10/bin/mongod --config /temp/mongodb/main/instance1/mongodb.conf"
+pssh -h ~/cs4224.txt "/temp/mongodb/main/instance2/mongodb-linux-x86_64-rhel70-3.4.10/bin/mongod --config /temp/mongodb/main/instance2/mongodb.conf"
+pssh -h ~/cs4224.txt "/temp/mongodb/main/instance3/mongodb-linux-x86_64-rhel70-3.4.10/bin/mongod --config /temp/mongodb/main/instance3/mongodb.conf"

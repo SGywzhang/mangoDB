@@ -1,0 +1,9 @@
+pssh -h ~/cs4224conf.txt "cp /temp/mongodb/main/instance1/mongodb.tgz /temp/mongodb/main/confinstance/mongodb.tgz"
+
+pssh -h ~/cs4224conf.txt "tar -xvzf /temp/mongodb/main/confinstance/mongodb.tgz -C /temp/mongodb/main/confinstance/"
+
+scp configsvrreplica-1.yaml cs4224c@192.168.48.229:/temp/mongodb/main/confinstance/mongodb.conf
+scp configsvrreplica-2.yaml cs4224c@192.168.48.231:/temp/mongodb/main/confinstance/mongodb.conf
+scp configsvrreplica-3.yaml cs4224c@192.168.48.233:/temp/mongodb/main/confinstance/mongodb.conf
+
+pssh -h ~/cs4224conf.txt "/temp/mongodb/main/confinstance/mongodb-linux-x86_64-rhel70-3.4.10/bin/mongod --config /temp/mongodb/main/confinstance/mongodb.conf"

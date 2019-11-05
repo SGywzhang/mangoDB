@@ -1,0 +1,25 @@
+sharding:
+  clusterRole: shardsvr
+storage:
+   dbPath: /temp/mongodb/data/data{0}/
+   wiredTiger:
+      engineConfig:
+         cacheSizeGB: 16
+processManagement:
+   fork: true
+   pidFilePath: /temp/mongodb/main/instance{0}/main.pid
+net:
+   bindIp: {1}
+   port: {2}
+   compression:
+      compressors: snappy
+systemLog:
+   destination: file
+   path: /temp/mongodb/log/log{0}/mongod.log
+   logAppend: true
+storage:
+   journal:
+      enabled: true
+replication:
+   replSetName: shard{3}
+   enableMajorityReadConcern: {4}

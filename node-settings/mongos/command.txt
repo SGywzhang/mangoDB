@@ -1,0 +1,11 @@
+pssh -h ~/cs4224.txt "cp /temp/mongodb/main/instance1/mongodb.tgz /temp/mongodb/main/mongos/mongodb.tgz"
+
+pssh -h ~/cs4224.txt "tar -xvzf /temp/mongodb/main/mongos/mongodb.tgz -C /temp/mongodb/main/mongos/"
+
+scp mongos-1.yaml cs4224c@192.168.48.229:/temp/mongodb/main/mongos/mongos.conf
+scp mongos-2.yaml cs4224c@192.168.48.230:/temp/mongodb/main/mongos/mongos.conf
+scp mongos-3.yaml cs4224c@192.168.48.231:/temp/mongodb/main/mongos/mongos.conf
+scp mongos-4.yaml cs4224c@192.168.48.232:/temp/mongodb/main/mongos/mongos.conf
+scp mongos-5.yaml cs4224c@192.168.48.233:/temp/mongodb/main/mongos/mongos.conf
+
+pssh -h ~/cs4224.txt "/temp/mongodb/main/mongos/mongodb-linux-x86_64-rhel70-3.4.10/bin/mongos --config /temp/mongodb/main/mongos/mongos.conf"

@@ -1,0 +1,9 @@
+rs.initiate('{'
+    _id: "configsrvreplica",
+    configsvr: true,
+    members: [
+        '{' _id : 0, host : "{0}:27001" '}',
+        '{' _id : 1, host : "{1}:27001" '}',
+        '{' _id : 2, host : "{2}:27001" '}'
+    ]
+'}');

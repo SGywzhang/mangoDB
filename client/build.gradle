@@ -1,0 +1,38 @@
+group 'com.nus.comp.cs4224c'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.gradle.org/gradle/libs-releases' }
+}
+
+test.mustRunAfter ":import:test" // ':import:test' is used inside test method
+
+task run(type: JavaExec) {
+    standardInput = System.in
+    main = "client.cs4224c.Client"
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task experiment(type: JavaExec) {
+    if (project.hasProperty('tFile') && project.hasProperty('tHost')) {
+        args(tFile, tHost)
+    }
+    main = "client.cs4224c.ExperimentClient"
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+dependencies {
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.3'
+    compile group: 'org.apache.commons', name: 'commons-configuration2', version: '2.1'
+    compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.2'
+    compile group: 'org.mongodb', name: 'mongodb-driver', version: '3.5.0'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.gradle', name: 'gradle-tooling-api', version: '3.3'
+    testCompile group: 'org.apache.commons', name: 'commons-io', version: '1.3.2'
+}

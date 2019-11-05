@@ -1,0 +1,14 @@
+sharding:
+    configDB: configsrvreplica/xcnd10.comp.nus.edu.sg:27001,xcnd12.comp.nus.edu.sg:27001,xcnd14.comp.nus.edu.sg:27001
+net:
+    bindIp: 192.168.48.230
+    port: 27017
+    compression:
+        compressors: snappy
+processManagement:
+    fork: true
+    pidFilePath: /temp/mongodb/main/mongos/main.pid
+systemLog:
+    destination: file
+    path: /temp/mongodb/log/mongos/mongos.log
+    logAppend: true

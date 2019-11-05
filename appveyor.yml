@@ -1,0 +1,13 @@
+skip_branch_with_pr: true
+
+services:
+  - mongodb
+
+platform:
+  - x64
+
+build_script:
+  - gradlew.bat assemble --info --no-daemon
+
+test_script:
+  - gradlew.bat check --info --no-daemon

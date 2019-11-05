@@ -1,0 +1,14 @@
+sharding:
+    configDB: configsrvreplica/{1}:27001,{2}:27001,{3}:27001
+net:
+    bindIp: {0}
+    port: 27017
+    compression:
+        compressors: snappy
+processManagement:
+    fork: true
+    pidFilePath: /temp/mongodb/main/mongos/main.pid
+systemLog:
+    destination: file
+    path: /temp/mongodb/log/mongos/mongos.log
+    logAppend: true

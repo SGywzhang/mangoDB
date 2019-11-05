@@ -1,0 +1,11 @@
+#!/bin/bash
+
+declare -a hosts=('192.168.48.229' '192.168.48.230' '192.168.48.231' '192.168.48.232' '192.168.48.233')
+
+for i in {1..10}
+do
+  ./gradlew client:experiment -PtFile=$i.txt -PtHost=${hosts[(i - 1) % 5]} --no-daemon &> experiment_log/$i.log &
+  PID=$!
+  echo $PID | tee experiment_log/$i.pid
+  sleep 40s
+done

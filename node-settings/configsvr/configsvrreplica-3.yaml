@@ -1,0 +1,21 @@
+sharding:
+    clusterRole: configsvr
+net:
+    bindIp: 192.168.48.233
+    port: 27001
+    compression:
+        compressors: snappy
+processManagement:
+    fork: true
+    pidFilePath: /temp/mongodb/main/confinstance/main.pid
+storage:
+    dbPath: /temp/mongodb/data/confdata/
+    wiredTiger:
+      engineConfig:
+         cacheSizeGB: 4
+systemLog:
+    destination: file
+    path: /temp/mongodb/log/conf/mongod.log
+    logAppend: true
+replication:
+    replSetName: configsrvreplica
