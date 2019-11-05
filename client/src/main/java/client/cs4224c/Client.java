@@ -81,8 +81,8 @@ public class Client {
 
             numOfTransaction++;
             stopWatch.resume();
-            transaction.execute();
             startTime = System.currentTimeMillis();
+            transaction.execute();
             endTime = System.currentTimeMillis();
             transactionLatencyList.add(endTime-startTime);
             stopWatch.suspend();
