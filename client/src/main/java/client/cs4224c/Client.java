@@ -103,10 +103,10 @@ public class Client {
         out.println("Transaction throughput: " + numOfTransaction / (stopWatch.getTime() / 1000.0));
 
         Long[] tl = new Long[transactionLatencyList.size()];
-        out.println("Average transaction latency: " + ExperimentClient.average(transactionLatencyList.toArray(tl)));
-        out.println("Median transaction latency: " + ExperimentClient.median(transactionLatencyList.toArray(tl)));
-        out.println("95th percentile transaction latency: " + ExperimentClient.getPercentile(transactionLatencyList.toArray(tl),0.95));
-        out.println("99th percentile transaction latency: " + ExperimentClient.getPercentile(transactionLatencyList.toArray(tl),0.99));
+        out.println("Average transaction latency: " + Client.average(transactionLatencyList.toArray(tl)));
+        out.println("Median transaction latency: " + Client.median(transactionLatencyList.toArray(tl)));
+        out.println("95th percentile transaction latency: " + Client.getPercentile(transactionLatencyList.toArray(tl),0.95));
+        out.println("99th percentile transaction latency: " + Client.getPercentile(transactionLatencyList.toArray(tl),0.99));
         out.println();
         out.println("******************************");
         out.println();
