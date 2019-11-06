@@ -1,0 +1,8 @@
+  
+#!/bin/bash
+
+declare -a hosts=('192.168.48.229' '192.168.48.230' '192.168.48.231' '192.168.48.232' '192.168.48.233')
+
+  ./gradlew client:experiment -PtFile=$queryDatabase.txt -PtHost=${hosts[0]} --no-daemon &> experiment_log/queryDatabase.log &
+  PID=$!
+  echo $PID | tee experiment_log/$queryDatabase.pid
