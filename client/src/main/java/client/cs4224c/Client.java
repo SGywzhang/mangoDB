@@ -57,7 +57,7 @@ public class Client {
         stopWatch.suspend();
         int numOfTransaction = 0;
 
-        String outFilePath = "/temp/Client_performance_Measurement.txt";
+        String outFilePath = "/home/stuproj/cs4224c/Client_performance_Measurement.txt";
 
         PrintWriter out = new PrintWriter(new FileOutputStream(new File(outFilePath), true));
 
