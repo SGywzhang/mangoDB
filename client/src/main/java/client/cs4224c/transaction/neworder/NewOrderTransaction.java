@@ -12,6 +12,9 @@ import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mongodb.client.FindIterable;
+
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,21 +42,86 @@ public class NewOrderTransaction extends AbstractTransaction {
                 .find(Filters.eq("_id", getCompoundKey(getStr(data.getW_ID()), getStr(data.getD_ID()))))
                 .projection(Projections.fields(Projections.include("d_next_o_id", "d_tax", "warehouse.w_tax"), Projections.excludeId()))
                 .first();
+
+
+
+
+
+        System.out.println(String.format("%d   %d   the old D_NEXT_O_ID   %d", data.getW_ID(), data.getD_ID(), districtDocument.getInteger("d_next_o_id")));
+
+
+        final int next_o_id = districtDocument.getInteger("d_next_o_id") + 1;
+
+        System.out.println(String.format("first ==    next_o_id   %d ", next_o_id));
+
+
+        Document Next = new Document();
+        Next.append("d_next_o_id", next_o_id);
+
+        Document update = new Document();
+        update.append("$set", Next);
+            // collectionPool.getCollection(Collection.Stock)
+            //         .updateOne(Filters.eq("_id", stockKey), new Document("$inc", updateIncrementDocument));
+
+
+
+        // Document Next = new Document("$inc", new Document("d_next_o_id", 1));
+
         collectionPool.getCollection(Collection.District)
                 .updateOne(Filters.eq("_id", getCompoundKey(getStr(data.getW_ID()), getStr(data.getD_ID()))),
-                        new Document("$inc", new Document("d_next_o_id", 1)));
-        int next_o_id = districtDocument.getInteger("d_next_o_id");
+                        update);
+
+
+        FindIterable<Document> Test2 = collectionPool.getCollection(Collection.District)
+                .find(Filters.eq("_id", getCompoundKey(getStr(data.getW_ID()), getStr(data.getD_ID()))));
+        // for (Document test:Test2) 
+                Document test = Test2.first ();
+            System.out.println(String.format("   update! %d %d   %d", data.getW_ID(), data.getD_ID(), test.getInteger("d_next_o_id")));
+
+        // while (Test2.first().getInteger("d_next_o_id") != next_o_id)
+        // {
+        //     System.out.println(String.format("try !"));
+        //     Test2 = collectionPool.getCollection(Collection.District)
+        //         .find(Filters.eq("_id", getCompoundKey(getStr(data.getW_ID()), getStr(data.getD_ID()))));
+        //         test = Test2.first ();
+        //         System.out.println(String.format("   update! %d %d   %d", data.getW_ID(), data.getD_ID(), test.getInteger("d_next_o_id")));
+        // }
+
+
+
+
+        // int next_o_id = districtDocument.getInteger("d_next_o_id");
+        // int next_o_id = Test2.first ().getInteger("d_next_o_id");
+        System.out.println(String.format("   next_o_id   %d ", next_o_id));
+
 
         data.setD_TAX(districtDocument.getDouble("d_tax"));
         data.setW_TAX(districtDocument.get("warehouse", Document.class).getDouble("w_tax"));
         logger.info("Get the D_NEXT_O_ID and update it already {}", next_o_id);
+
+
 
         logger.info("Update customer last order");
         collectionPool.getCollection(Collection.Customer)
                 .updateOne(Filters.eq("_id", getCompoundKey(getStr(data.getW_ID()), getStr(data.getD_ID()), getStr(data.getC_ID()))),
                         new Document("$set", new Document("c_last_order", next_o_id)));
 
+
+
+        Test2 = collectionPool.getCollection(Collection.Customer)
+                .find (Filters.eq("_id", getCompoundKey(getStr(data.getW_ID()), getStr(data.getD_ID()), getStr(data.getC_ID()))));
+                test = Test2.first ();
+            System.out.println(String.format("   update customer! %d %d %d   %d", data.getW_ID(), data.getD_ID(), data.getC_ID(), test.getInteger("c_last_order")));
+
+
+
+
+
+
         logger.info("Create new order");
+
+        System.out.println(String.format("begin new order"));
+
         data.setO_ENTRY_D(new Date());
         Document orderItem = new Document();
         orderItem.put("_id", getCompoundKey(getStr(data.getW_ID()), getStr(data.getD_ID()), getStr(next_o_id)));
