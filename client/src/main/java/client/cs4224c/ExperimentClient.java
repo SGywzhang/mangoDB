@@ -70,7 +70,7 @@ public class ExperimentClient {
         Scanner sc = new Scanner(Paths.get(ProjectConfig.getInstance().getProjectRoot(), ProjectConfig.getInstance().getTransactionFileFolder(),
                 args[0]));
 
-        String outFilePath = "/temp/ExperimentClient_performance_Measurement.txt";
+        String outFilePath = "/home/stuproj/cs4224c/ExperimentClient_performance_Measurement.txt";
 
         PrintWriter out = new PrintWriter(new FileOutputStream(new File(outFilePath), true));
 
