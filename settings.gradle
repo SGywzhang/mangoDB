@@ -1,6 +1,6 @@
 rootProject.name = 'mongodb'
 include 'builddb'
-include 'loaddata'
+include 'import'
 include 'client'
 include 'nodesetup'
 
