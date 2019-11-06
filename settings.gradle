@@ -1,6 +1,6 @@
 rootProject.name = 'mongodb'
-include 'massage'
-include 'import'
+include 'builddb'
+include 'loaddata'
 include 'client'
 include 'nodesetup'
 
